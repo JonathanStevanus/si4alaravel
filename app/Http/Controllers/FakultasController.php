@@ -12,9 +12,9 @@ class FakultasController extends Controller
      */
     public function index()
     {
-        //
+        
         $fakultas =Fakultas::all();
-        dd($fakultas);
+        // dd($fakultas);
         return view('fakultas.index',compact('fakultas'));
     }
 
