@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Fakultas')
+@section('title', 'Mahasiswa')
 
 @section('content')
     <!--begin::Row-->
@@ -8,7 +8,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-            <h3 class="card-title">List Fakultas</h3>
+            <h3 class="card-title">List Mahasiswa</h3>
             <div class="card-tools">
                 <button
                 type="button"
@@ -30,36 +30,37 @@
             </div>
             </div>
             <div class="card-body">
-                <a href="{{ route('fakultas.create') }}" class="btn btn-primary"> Tambah </a>
+                <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary"> Tambah </a>
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Foto</th>
                             <th>Nama</th>
-                            <th>Singkatan</th>
-                            <th>Dekan</th>
-                            <th>Wakil Dekan</th>
+                            <th>NPM</th>
+                            <th>Prodi</th>
+                            <th>Fakultas</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($fakultas as $item)
-                            <tr>
-                                <td>{{ $item->nama }}</td>
-                                <td>{{ $item->singkatan }}</td>
-                                <td>{{ $item->dekan}}</td>
-                                <td>{{ $item->wakil_dekan}}</td>
-                                <td>
-                                    <a href="{{ route('fakultas.show', $item->id) }}" class="btn btn-info">Show</a>
-                                    <a href="{{ route('fakultas.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                                    <form action="{{ route('fakultas.destroy', $item->id) }}" method="POST" class="d-inline">
+                    @foreach ($mahasiswa as $item)
+                        <tr>
+                            <td><img src="images/{{ $item->foto }}" width="80px" /></td>
+                            <td>{{ $item->nama }}</td>
+                            <td>{{ $item->npm }}</td>
+                            <td>{{ $item->prodi->nama}}</td>
+                            <td>{{ $item->prodi->fakultas->nama}}</td>
+                            <td>
+                                <a href="{{ route('mahasiswa.show', $item->id) }}" class="btn btn-info">Show</a>
+                                <a href="{{ route('mahasiswa.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                                <form action="{{ route('mahasiswa.destroy', $item->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger show_confirm" data-toggle="tooltip" title='Delete'
-                                    data-nama='{{ $item->nama }}'>Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
     

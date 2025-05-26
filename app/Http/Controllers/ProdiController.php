@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fakultas;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class ProdiController extends Controller
      */
     public function index()
     {
-        //
+        $prodi = Prodi::all();
+        return view('prodi.index', compact('prodi'));
     }
 
     /**
@@ -20,7 +22,8 @@ class ProdiController extends Controller
      */
     public function create()
     {
-        //
+        $fakultas = Fakultas::all();
+        return view('prodi.create', compact('fakultas'));
     }
 
     /**
@@ -28,7 +31,20 @@ class ProdiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validasi input
+        $input = $request->validate([
+            'nama' => 'required|unique:prodi',
+            'singkatan' => 'required|max:5',
+            'kaprodi' => 'required',
+            'sekretaris' => 'required',
+            'fakultas_id' => 'required',
+        ]);
+
+        // simpan data ke tabel prodi
+        Prodi::create($input);
+
+        // redirect ke route prodi.index
+        return redirect()->route('prodi.index')->with('success', 'Program studi berhasil ditambahkan.');
     }
 
     /**
@@ -60,6 +76,9 @@ class ProdiController extends Controller
      */
     public function destroy(Prodi $prodi)
     {
-        //
+        $prodi = Prodi::findOrFail($prodi);
+        //dd($prodi);
+        $prodi->delete();
+        return redirect()->route('prodi.index')->with('success', 'Program studi berhasil dihapus.');
     }
 }
