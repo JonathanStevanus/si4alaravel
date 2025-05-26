@@ -843,6 +843,16 @@
                 });
         });
     </script>
+    @session('success')
+    <script type="text/javascript">
+        
+swal({
+  title: "Good job!",
+  text: "You clicked the button!",
+  icon: "success"
+});
+    </script>
+@endsession
     <!--end::Script-->
   </body>
   <!--end::Body-->
